@@ -1,10 +1,10 @@
 import React from 'react'
-import '../css/styles.css'
+import classes from '../css/styles.css'
 class Header extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      header:'default header'
+      header:'default header',
     }
   }
   onHeaderClick(){
@@ -31,10 +31,11 @@ class Header extends React.Component{
       styles.background=""
     }
     return (
-     <div className="header" style={styles}>
-      <p className="header_title" onClick={this.onHeaderClick}>{this.state.header}</p>
-      <p className="header_small">Author : {author.name}@{author.city} Date:{newDate.getFullYear()}</p>
-      <input type="text" onChange={this.onInputChange}/>
+     <div className={classes.header} style={styles}>
+      <p className={classes.header_title} onClick={this.onHeaderClick}>{this.state.header}</p>
+      <p className={classes.header_small}>Author : {author.name}@{author.city} Date:{newDate.getFullYear()}</p>
+      <input type="text" onChange={this.onInputChange} placeholder="header name"/>
+      <input type="text" onChange={this.props.keywordsHandler} placeholder="filter keyword"/>
     </div>     
     )
   }

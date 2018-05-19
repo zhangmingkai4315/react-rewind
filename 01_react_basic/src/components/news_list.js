@@ -1,5 +1,6 @@
 import React from 'react'
 import NewsItem from './news_item'
+
 const NewsList = ({db,children}) => {
   return (
     <div>

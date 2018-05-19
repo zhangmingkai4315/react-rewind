@@ -22,3 +22,15 @@ html,body{
   width: 50%;
   height: 2em;
 }
+.news_item{
+  padding: 10px 5px;
+  border-bottom: 1px solid gray;
+}
+.news_item:hover{
+  color:rebeccapurple
+}
+@media(max-width:500px){
+  .news_item{
+    color:orange
+  }
+}
