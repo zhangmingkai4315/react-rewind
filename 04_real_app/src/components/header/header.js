@@ -10,15 +10,16 @@ const Header = (props) => {
   const navBars = () =>(
     <div className={style.bars}>
       <FontAwesome name="bars" 
+                  onClick={props.onOpenNav}
                   style={{color:"#dfdfdf",padding:"10px",cursor:"pointer"}}>
       </FontAwesome>
     </div>
   )
-  const logo = () =>{
+  const logo = () =>(
     <Link to="/" className={style.logo}>
       <img alt="nba" src="/images/nba_logo.png"/>
     </Link>
-  }
+  )
   return (
     <header className={style.header}>
       <SideNav {...props}/>
