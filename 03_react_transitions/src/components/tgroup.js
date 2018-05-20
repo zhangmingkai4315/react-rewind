@@ -7,7 +7,6 @@ class Slide extends Component{
     state = {
         items:[]
     }
-    
     addElements = () => {
         return this.state.items.map((item,i) => {
         return  (
