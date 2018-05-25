@@ -10,6 +10,7 @@ import styles from './style.css'
 class NewsList extends Component {
   state = {
     items:[],
+    teams:[],
     start:this.props.start,
     end: this.props.start + this.props.amount
   }
@@ -19,6 +20,11 @@ class NewsList extends Component {
   }
 
   request = (start,end) =>{
+    if(this.state.teams.length<1){
+      axios.get(`${API_URL}/teams`).then(res=>{
+        this.setState({teams:res.data})
+      })
+    }
     axios.get(`${API_URL}/articles?_start=${start}&_end=${end}`)
     .then(res=>{
       this.setState({
@@ -45,7 +51,7 @@ class NewsList extends Component {
           }}
           key={i} 
           timeout={500}>
-          <NewsCard item={item}/>
+          <NewsCard item={item} teams={this.state.teams}/>
         </CSSTransition>
         ))
         break;
