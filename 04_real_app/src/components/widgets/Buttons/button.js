@@ -15,6 +15,9 @@ const Button = (props) => {
         </div>
       )
       break;
+    case 'linkTo':
+      template=<Link to={props.linkTo} className={styles.blue_btn}>{props.title}</Link>
+      break
     default:
       template=null;
   }
