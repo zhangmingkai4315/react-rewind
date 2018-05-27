@@ -12,7 +12,6 @@ const VideoTemplate = (props) => {
     if(team){
       teamName=team.name
     }
-    // console.log(teamName)
     return (
       <Link to={`/videos/${item.id}`} key={i}>
         <div className={styles.videoListItem_wrapper}>
