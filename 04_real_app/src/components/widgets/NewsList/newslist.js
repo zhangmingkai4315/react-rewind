@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { TransitionGroup,CSSTransition } from 'react-transition-group'
 import axios from 'axios';
-
+import {Link} from 'react-router-dom'
 import NewsCard from './newscard'
 import {API_URL} from '../../config';
 import Button from '../Buttons/button'
 import styles from './style.css'
+import CardInfo from '../CardInfo/cardinfo';
 
 class NewsList extends Component {
   state = {
@@ -30,7 +31,7 @@ class NewsList extends Component {
       this.setState({
         items:[...this.state.items,...res.data],
         start:end,
-        end: end+this.props.amount
+        end:end+this.props.amount
       })
     })
   }
@@ -54,6 +55,26 @@ class NewsList extends Component {
           <NewsCard item={item} teams={this.state.teams}/>
         </CSSTransition>
         ))
+        break;
+      case("cardMain"):
+        template = this.state.items.map( (item,i) => (
+          <CSSTransition 
+            classNames={{
+              enter:styles["fade-enter"],
+              enterActive:styles["fade-enter-active"]
+            }}
+            key={i} 
+            timeout={500}>
+              <div className={styles.flex_wrapper}>
+                <div className={styles.left} style={{background:`url("/images/articles/${item.image}")`}}>
+                  <div></div>
+                </div>
+                <div className={styles.right}>
+                  <NewsCard item={item} teams={this.state.teams}/>
+                </div>
+              </div>
+          </CSSTransition>
+          ))
         break;
       default:
         template=null;
