@@ -2,7 +2,7 @@ import React from 'react';
 
 const FormFields = ({formData})=>{
     const renderFields =()=>{
-
+                
     }
     return(
         <div>
