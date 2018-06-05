@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import SlideTemplates from './slider_template';
 import axios from 'axios'
+import { firebaseArticles , firebaseLoop } from '../../../firebase';
+
 
 import {API_URL} from '../../config'
 class NewsSlider extends Component {
@@ -8,10 +10,10 @@ class NewsSlider extends Component {
     news:[]
   } 
   componentWillMount(){ 
-    axios.get(`${API_URL}/articles?_start=${this.props.start}&_end=${this.props.amount}`)
-         .then(res=>{
-           this.setState({news:res.data})
-         })
+    firebaseArticles.limitToFirst(3).once('value').then(snapshot=>{
+      const news=firebaseLoop(snapshot);
+      this.setState({news})
+    })
   }
   render() {
     return (

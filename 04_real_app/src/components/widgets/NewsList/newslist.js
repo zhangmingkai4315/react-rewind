@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { TransitionGroup,CSSTransition } from 'react-transition-group'
-import axios from 'axios';
-import {Link} from 'react-router-dom'
 import NewsCard from './newscard'
-import {API_URL} from '../../config';
 import Button from '../Buttons/button'
 import styles from './style.css'
-import CardInfo from '../CardInfo/cardinfo';
+
+
+import { firebaseTeams, firebaseLoop, firebaseArticles } from '../../../firebase'
 
 class NewsList extends Component {
   state = {
@@ -22,18 +21,21 @@ class NewsList extends Component {
 
   request = (start,end) =>{
     if(this.state.teams.length<1){
-      axios.get(`${API_URL}/teams`).then(res=>{
-        this.setState({teams:res.data})
+      firebaseTeams.once("value").then((snapshot)=>{
+        const teams = firebaseLoop(snapshot)
+        this.setState({teams:teams})
       })
     }
-    axios.get(`${API_URL}/articles?_start=${start}&_end=${end}`)
-    .then(res=>{
+    firebaseArticles.orderByChild("id").startAt(start).endAt(end).once('value')
+    .then(snapshot=>{
+      const articles = firebaseLoop(snapshot)
       this.setState({
-        items:[...this.state.items,...res.data],
-        start:end,
-        end:end+this.props.amount
-      })
-    })
+            items:[...this.state.items,...articles],
+            start:end+1,
+            end:end+this.props.amount
+          })
+    }).catch(e=>console.error(e))
+
   }
 
   loadmore=()=>{

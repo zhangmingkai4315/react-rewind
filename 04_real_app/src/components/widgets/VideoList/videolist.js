@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { TransitionGroup,CSSTransition } from 'react-transition-group'
-import axios from 'axios';
-
-import {API_URL} from '../../config';
 import Button from '../Buttons/button'
 import VideoTemplate from './video_template'
 import styles from './styles.css'
+
+import { firebaseTeams, firebaseVideos, firebaseLoop } from '../../../firebase'
 
 class VideoList extends Component {
   state = {
@@ -22,18 +21,23 @@ class VideoList extends Component {
   }
   request = (start,end) =>{
     if(this.state.teams.length<1){
-      axios.get(`${API_URL}/teams`).then(res=>{
-        this.setState({teams:res.data})
+      firebaseTeams.once("value").then((snapshot)=>{
+        const teams = firebaseLoop(snapshot)
+        this.setState({teams:teams})
       })
     }
-    axios.get(`${API_URL}/videos?_start=${start}&_end=${end}`)
-    .then(res=>{
+
+    firebaseVideos.orderByChild("id").startAt(start).endAt(end).once('value')
+    .then(snapshot=>{
+      const videos = firebaseLoop(snapshot)
       this.setState({
-        videos:[...this.state.videos,...res.data],
-        start:end,
-        end: end+this.props.amount
-      })
-    })
+            videos:[...this.state.videos,...videos],
+            start:end+1,
+            end:end+this.props.amount
+          })
+    }).catch(e=>console.error(e))
+
+
   }
   loadmore=()=>{
     this.request(this.state.start,this.state.end)

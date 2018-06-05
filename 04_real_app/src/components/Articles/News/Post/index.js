@@ -3,6 +3,8 @@ import Header from './header';
 import Axios from 'axios';
 import {API_URL} from '../../../config'
 import styles from '../../styles.css'
+import moment from 'moment'
+import { firebaseDB, firebaseLoop, firebaseTeams } from '../../../../firebase'
 
 class NewsArticles extends Component {
   state = {
@@ -11,23 +13,29 @@ class NewsArticles extends Component {
   }
 
   componentWillMount(){
-    Axios.get(`${API_URL}/articles?id=${this.props.match.params.id}`)
-         .then(res=>{
-          //  console.log(res.data)
-            let article = res.data[0]
-            Axios.get(`${API_URL}/teams?id=${article.team}`)
-                 .then(res=>{
-                   this.setState({article,
-                   team:res.data});
-                 })
-         })
+
+    firebaseDB.ref(`articles/${this.props.match.params.id}`).once('value')
+              .then(snapshot=>{
+                let article = snapshot.val();
+                firebaseTeams.orderByChild("id").equalTo(article.team).once('value')
+                             .then(snapshot=>{
+                               const team = firebaseLoop(snapshot)
+                               this.setState({article,team})
+                             })
+              })
+
   }
+
+  formatDate = (date) =>{
+    return moment(date).format(" MM-DD-YYYY ")
+  }
+
   render () {
     const article = this.state.article;
     const team = this.state.team;
     return (
       <div className={styles.articleWrapper}>
-        <Header teamData={team[0]} date={article.date} author={article.author}/>
+        <Header teamData={team[0]} date={this.formatDate(article.date)} author={article.author}/>
         <div className={styles.articleBody}>
           <h1>{article.title}</h1>
           <div className={styles.articleImage} style={{background:`url('/images/articles/${article.image}')`}}>
