@@ -11,7 +11,7 @@ import SignIn from './components/signin/signin'
 class Routes extends Component {
   render () {
     return ( 
-      <Layout>
+      <Layout user={this.props.user}>
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/news" exact component={NewsMain}/>

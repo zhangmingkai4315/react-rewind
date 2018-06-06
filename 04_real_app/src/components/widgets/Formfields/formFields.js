@@ -1,7 +1,19 @@
 import React from 'react';
-import styles from './formFields'
+import styles from './formFields.css'
 
 const FormField = ({id,formdata,change}) => {
+  const showError = ()=>{
+    let err = null;
+    if(formdata.validation && !formdata.valid){
+      err = (
+        <div className={styles.labelError}>
+          {formdata.validationMessage}
+        </div>
+      )
+      
+    }
+    return err
+  }
   const renderTemplate = ()=>{
     let formTemplate = null;
     switch(formdata.element){
@@ -12,7 +24,7 @@ const FormField = ({id,formdata,change}) => {
           value={formdata.value}
           onBlur={event=>change({event,id,blur:true})}
           onChange={event=>change({event,id,blur:false})}/>
-        
+        {showError()}
       </div>)
       break;
       default:

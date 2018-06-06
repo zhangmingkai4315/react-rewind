@@ -1,13 +1,13 @@
 
 import React from 'react'
 import {BrowserRouter} from 'react-router-dom';
-
 import Routes from './routes';
 
-const App = () => {
+
+const App = (props) => {
   return (
     <BrowserRouter>
-      <Routes/>
+      <Routes user={props.user}/>
     </BrowserRouter>
   )
 }

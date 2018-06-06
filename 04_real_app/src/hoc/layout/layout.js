@@ -15,7 +15,8 @@ class Layout extends Component {
   render () {
     return (
       <div>
-        <Header showNav={this.state.showNav} 
+        <Header showNav={this.state.showNav}
+                user={this.props.user}
                 onOpenNav={()=> this.toggleSideNav(true)}
                 onHideNav={()=> this.toggleSideNav(false)}/>
         {this.props.children}
