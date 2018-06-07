@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { TransitionGroup,CSSTransition } from 'react-transition-group'
 import Button from '../Buttons/button'
 import VideoTemplate from './video_template'
 import styles from './styles.css'

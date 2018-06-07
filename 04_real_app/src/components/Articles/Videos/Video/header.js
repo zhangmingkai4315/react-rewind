@@ -1,6 +1,5 @@
 import React from 'react'
 import TeamInfo from '../../Elements/teamInfo';
-import PostData from '../../Elements/postData';
 const Header = (props) => {
   const teamInfo = (team)=>{
     return team?(<TeamInfo team={team}/>):null;

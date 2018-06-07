@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import Axios from 'axios';
-import { API_URL } from '../../../config'
 import styles from '../../styles.css';
 import Header from './header';
 import VideoRelated from './video_related'
@@ -17,19 +15,6 @@ class VideoArticle extends Component {
   }
 
   componentWillMount(){
-    // Axios.get(`${API_URL}/videos?id=${this.props.match.params.id}`)
-    //      .then(res=>{
-    //       //  console.log(res.data)
-    //         let article = res.data[0]
-    //         Axios.get(`${API_URL}/teams?id=${article.team}`)
-    //              .then(res=>{
-    //                this.setState({article,
-    //                team:res.data});
-
-    //                this.getRelated();
-    //              })
-            
-    //      })
 
     firebaseDB.ref(`videos/${this.props.match.params.id}`).once("value")
     .then(snapshot=>{

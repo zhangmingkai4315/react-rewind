@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import Header from './header';
-import Axios from 'axios';
-import {API_URL} from '../../../config'
 import styles from '../../styles.css'
 import moment from 'moment'
 import { firebaseDB, firebaseLoop, firebaseTeams } from '../../../../firebase'

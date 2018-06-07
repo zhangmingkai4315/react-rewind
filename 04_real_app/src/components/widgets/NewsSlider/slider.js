@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import SlideTemplates from './slider_template';
-import axios from 'axios'
 import { firebaseArticles , firebaseLoop } from '../../../firebase';
 
-
-import {API_URL} from '../../config'
 class NewsSlider extends Component {
   state = {
     news:[]

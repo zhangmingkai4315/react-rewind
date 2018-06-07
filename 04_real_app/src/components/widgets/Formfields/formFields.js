@@ -16,19 +16,29 @@ const FormField = ({id,formdata,change}) => {
   }
   const renderTemplate = ()=>{
     let formTemplate = null;
-    switch(formdata.element){
-      case('input'):
-      formTemplate=(<div>
-        <input 
-          {...formdata.config} 
-          value={formdata.value}
-          onBlur={event=>change({event,id,blur:true})}
-          onChange={event=>change({event,id,blur:false})}/>
-        {showError()}
-      </div>)
-      break;
+    switch (formdata.element) {
+      case "input":
+        formTemplate = <div>
+            <input {...formdata.config} value={formdata.value} onBlur={event => change(
+                  { event, id, blur: true }
+                )} onChange={event => change({ event, id, blur: false })} />
+            {showError()}
+          </div>;
+        break;
+      case "select":
+        formTemplate = <div>
+            <select value={formdata.value} name={formdata.name} onBlur={event => change(
+                  { event, id, blur: true }
+                )} onChange={event => change({ event, id, blur: false })}>
+              {formdata.config.options.map((o,i) => (
+                <option value={o.id} key={i}>{o.name}</option>
+              ))}
+            </select>
+            {showError()}
+          </div>;
+        break;
       default:
-      formTemplate=null;
+        formTemplate = null;
     }
     return formTemplate
   }
