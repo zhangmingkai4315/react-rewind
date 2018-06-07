@@ -27,7 +27,7 @@ class NewsArticles extends Component {
   formatDate = (date) =>{
     return moment(date).format(" MM-DD-YYYY ")
   }
-
+  
   render () {
     const article = this.state.article;
     const team = this.state.team;

@@ -100,7 +100,7 @@ class DashBoard extends Component {
             articleId = childSnapshot.val().id
           })
           dataToSubmit['date']=firebase.database.ServerValue.TIMESTAMP
-          dataToSubmit['id'] =0 ;
+          dataToSubmit['id'] = articleId+1;
           dataToSubmit['team'] = parseInt(dataToSubmit['team'],10);
           firebaseArticles.push(dataToSubmit).then(article => {
             this.props.history.push(`/articles/${article.key}`)
