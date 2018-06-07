@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import FormField from "../widgets/Formfields/formFields";
 import styles from './dashboard.css'
 
-import { firebaseTeams } from '../../firebase'
-
+import { firebaseTeams, firebaseArticles, firebase } from '../../firebase'
+import { withRouter } from 'react-router-dom'
 import Uploader from "../widgets/Fileuploader/uploader";
 
 import { Editor } from 'react-draft-wysiwyg';
@@ -59,7 +59,7 @@ class DashBoard extends Component {
         value: "",
         valid: true
       },
-      teams: {
+      team: {
         element: "select",
         value: "",
         config: {
@@ -93,6 +93,23 @@ class DashBoard extends Component {
           registerError: ""
         });
         // do submit work for backend
+        firebaseArticles.orderByChild("id").limitToLast(1).once('value')
+        .then(snapshot =>{
+          let articleId = null;
+          snapshot.forEach(childSnapshot => {
+            articleId = childSnapshot.val().id
+          })
+          dataToSubmit['date']=firebase.database.ServerValue.TIMESTAMP
+          dataToSubmit['id'] =0 ;
+          dataToSubmit['team'] = parseInt(dataToSubmit['team'],10);
+          firebaseArticles.push(dataToSubmit).then(article => {
+            this.props.history.push(`/articles/${article.key}`)
+          }).catch(e=>{
+            this.setState({
+              postError:e.message
+            })
+          })
+        })
         console.log(this.state.formdata);
       }
     }
@@ -164,9 +181,9 @@ class DashBoard extends Component {
         });
       });
       const newFormData = { ...this.state.formdata };
-      const newElement = { ...newFormData["teams"] };
+      const newElement = { ...newFormData["team"] };
       newElement.config.options = teams;
-      newFormData["teams"] = newElement;
+      newFormData["team"] = newElement;
 
       this.setState({ formdata: newFormData });
     });
@@ -198,8 +215,8 @@ class DashBoard extends Component {
           />
 
           <FormField
-            id={"teams"}
-            formdata={this.state.formdata.teams}
+            id={"team"}
+            formdata={this.state.formdata.team}
             change={element => this.updateForm(element)}
           />
 
@@ -222,4 +239,4 @@ class DashBoard extends Component {
   }
 }
 
-export default DashBoard
+export default withRouter(DashBoard)
