@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Home from './containers/home'
-import Artist from './components/artist';
+import Artist from './containers/artist';
 
 const Routes = () => {
         return(

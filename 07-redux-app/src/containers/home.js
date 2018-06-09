@@ -17,14 +17,13 @@ class Home extends Component {
 
     getKeywords = (event) => {
         let key = event.target.value;
-
-        console.log(key)
+        this.props.artistList(key);
     }
 
     render(){
         return (
             <div>
-                <Search keywords={this.getKeywords}/>
+                <Search keywords={this.getKeywords} />
                 <Artistlist artists={this.props.artists.artists}/>
             </div>
         )

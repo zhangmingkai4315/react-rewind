@@ -12,3 +12,28 @@ export function artistListAll(){
     payload: request
   }
 }
+
+export function artistList(keyword){
+  const request = axios.get(`${URL}/artists?q=${keyword}`)
+                       .then(response=>response.data)
+  
+  return {
+    type: actionTypes.GET_ARTISTS,
+    payload: request
+  }
+}
+
+export function artistDetail(id){
+  const request = axios.get(`${URL}/artists?id=${id}`)
+       .then(response => response.data)
+  return {
+    type: actionTypes.GET_ARTIST_DETAIL,
+    payload: request
+  }
+}
+
+export function clearArtistDetail(){
+  return {
+    type: actionTypes.CLEAR_ARTIST_DETAIL
+  }
+}
