@@ -11,7 +11,43 @@ const initialState = {
   slicesPerPerson: 2,
 };
 
-export default class Application extends Component {
+class PizzaCalculator extends Component{
+
+  render(){
+    const {numberOfPeople,
+          updateNumberOfPeople,
+          slicesPerPerson,
+          updateSlicesPerPerson,
+          numberOfPizzas,
+          reset} = this.props
+    return(
+      <div className="Application">
+      <Title />
+      <Input
+        label="Number of Guests"
+        type="number"
+        min={0}
+        value={numberOfPeople}
+        onChange={updateNumberOfPeople}
+      />
+      <Input
+        label="Slices Per Person"
+        type="number"
+        min={0}
+        value={slicesPerPerson}
+        onChange={updateSlicesPerPerson}
+      />
+      <Result amount={numberOfPizzas} />
+      <button className="full-width" onClick={reset}>
+        Reset
+      </button>
+    </div>)
+  }
+}
+
+
+const WithPizzaCalculator = (Comp) =>{
+ const Container = class extends Component{
   state = { ...initialState };
 
   updateNumberOfPeople = event => {
@@ -36,27 +72,24 @@ export default class Application extends Component {
     );
 
     return (
-      <div className="Application">
-        <Title />
-        <Input
-          label="Number of Guests"
-          type="number"
-          min={0}
-          value={numberOfPeople}
-          onChange={this.updateNumberOfPeople}
-        />
-        <Input
-          label="Slices Per Person"
-          type="number"
-          min={0}
-          value={slicesPerPerson}
-          onChange={this.updateSlicesPerPerson}
-        />
-        <Result amount={numberOfPizzas} />
-        <button className="full-width" onClick={this.reset}>
-          Reset
-        </button>
-      </div>
+      <Comp updateNumberOfPeople={this.updateNumberOfPeople}
+                       reset={this.reset}
+                       numberOfPizzas={numberOfPizzas}
+                       numberOfPeople={numberOfPeople}
+                       slicesPerPerson={slicesPerPerson}
+                       updateSlicesPerPerson={this.updateSlicesPerPerson}/>
+
     );
+  }
+  }
+  Container.displayName="PizzaCalculatorWapper"
+  return Container;
+}
+
+const PizzaContainer = WithPizzaCalculator(PizzaCalculator)
+
+export default class Application extends Component{
+  render(){
+    return <PizzaContainer/>
   }
 }
