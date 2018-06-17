@@ -37,15 +37,15 @@ const WithPizzaCalculator = (Comp) =>{
  const Container = class extends Component{
   state = { ...initialState };
 
-  updateNumberOfPeople = event => {
-    const numberOfPeople = parseInt(event.target.value, 10);
-    this.setState({ numberOfPeople });
-  };
+  // updateNumberOfPeople = event => {
+  //   const numberOfPeople = parseInt(event.target.value, 10);
+  //   this.setState({ numberOfPeople });
+  // };
 
-  updateSlicesPerPerson = event => {
-    const slicesPerPerson = parseInt(event.target.value, 10);
-    this.setState({ slicesPerPerson });
-  };
+  // updateSlicesPerPerson = event => {
+  //   const slicesPerPerson = parseInt(event.target.value, 10);
+  //   this.setState({ slicesPerPerson });
+  // };
 
   reset = event => {
     this.setState({ ...initialState });

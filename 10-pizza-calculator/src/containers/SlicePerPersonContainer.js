@@ -9,11 +9,11 @@ class SlicePerPerson extends Component {
   render() {
     return (
       <Input 
-      label="Slices Per Person"
-      type="number"
-      min={0}     
-      value={this.props.slicesPerPerson}
-      onChange={this.props.onChange}
+        label="Slices Per Person"
+        type="number"
+        min={0}     
+        value={this.props.slicesPerPerson}
+        onChange={this.props.onChange}
     />
     )
   }
